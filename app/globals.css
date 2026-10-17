@@ -1,38 +1,206 @@
 @import "tailwindcss";
 
+/*
+ * Theme: UNDP blue + the 17 SDG colours.
+ * Every text/background pair below meets WCAG AA (>= 4.5:1).
+ */
 :root {
-  --bg-canvas: #f5f5f7;
+  --bg-canvas: #f4f7fb;
   --bg-surface: #ffffff;
-  --bg-subtle: #fafafa;
-  --bg-pill: #efefef;
-  --border-hairline: #e5e5e7;
-  --border-strong: #d1d1d6;
-  --text-primary: #111113;
-  --text-secondary: #52525b;
-  --text-muted: #71717a;
-  --accent-bg: #111113;
+  --bg-subtle: #f7f9fc;
+  --bg-pill: #e8eef6;
+  --border-hairline: #dde5ef;
+  --border-strong: #c3d0e0;
+  --text-primary: #0b1f33;
+  --text-secondary: #3b4e63;
+  --text-muted: #55687d;
+  /* UNDP blue accent: white text on it is ~5.8:1 */
+  --accent-bg: #0468b1;
   --accent-text: #ffffff;
+  --focus-ring: #0468b1;
+  --hero-bg: #0468b1;
+  --card-shadow: 0 1px 2px rgba(11, 31, 51, 0.04),
+    0 8px 24px -14px rgba(11, 31, 51, 0.14);
+
+  /* Official SDG goal colours (1 → 17) */
+  --sdg-1: #e5243b;
+  --sdg-2: #dda63a;
+  --sdg-3: #4c9f38;
+  --sdg-4: #c5192d;
+  --sdg-5: #ff3a21;
+  --sdg-6: #26bde2;
+  --sdg-7: #fcc30b;
+  --sdg-8: #a21942;
+  --sdg-9: #fd6925;
+  --sdg-10: #dd1367;
+  --sdg-11: #fd9d24;
+  --sdg-12: #bf8b2e;
+  --sdg-13: #3f7e44;
+  --sdg-14: #0a97d9;
+  --sdg-15: #56c02b;
+  --sdg-16: #00689d;
+  --sdg-17: #19486a;
 }
 
 .dark {
-  --bg-canvas: #121212;
-  --bg-surface: #1e1e1e;
-  --bg-subtle: #18181a;
-  --bg-pill: #262629;
-  --border-hairline: #2c2c2e;
-  --border-strong: #3f3f46;
-  --text-primary: #f4f4f6;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --accent-bg: #f4f4f6;
-  --accent-text: #121212;
+  --bg-canvas: #0a1726;
+  --bg-surface: #102236;
+  --bg-subtle: #0d1d2f;
+  --bg-pill: #16304b;
+  --border-hairline: #1e3852;
+  --border-strong: #2b4a69;
+  --text-primary: #eef4fa;
+  --text-secondary: #b5c4d4;
+  --text-muted: #8fa3b8;
+  --accent-bg: #5eb3f0;
+  --accent-text: #0a1726;
+  --focus-ring: #5eb3f0;
+  --hero-bg: #0b3a63;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 12px 32px -16px rgba(0, 0, 0, 0.6);
 }
 
 body {
   background-color: var(--bg-canvas);
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
   transition: background-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
     color 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The 17 SDG colours as one continuous stripe */
+.sdg-stripe {
+  background: linear-gradient(
+    90deg,
+    var(--sdg-1) 0% 5.88%,
+    var(--sdg-2) 5.88% 11.76%,
+    var(--sdg-3) 11.76% 17.65%,
+    var(--sdg-4) 17.65% 23.53%,
+    var(--sdg-5) 23.53% 29.41%,
+    var(--sdg-6) 29.41% 35.29%,
+    var(--sdg-7) 35.29% 41.18%,
+    var(--sdg-8) 41.18% 47.06%,
+    var(--sdg-9) 47.06% 52.94%,
+    var(--sdg-10) 52.94% 58.82%,
+    var(--sdg-11) 58.82% 64.71%,
+    var(--sdg-12) 64.71% 70.59%,
+    var(--sdg-13) 70.59% 76.47%,
+    var(--sdg-14) 76.47% 82.35%,
+    var(--sdg-15) 82.35% 88.24%,
+    var(--sdg-16) 88.24% 94.12%,
+    var(--sdg-17) 94.12% 100%
+  );
+}
+
+/* UNDP-blue hero banner */
+.hero-banner {
+  background-color: var(--hero-bg);
+  box-shadow: var(--card-shadow);
+}
+
+/* Decorative SDG colour ring behind the hero content */
+.sdg-ring {
+  background: conic-gradient(
+    var(--sdg-1) 0deg 21.2deg,
+    var(--sdg-2) 21.2deg 42.4deg,
+    var(--sdg-3) 42.4deg 63.5deg,
+    var(--sdg-4) 63.5deg 84.7deg,
+    var(--sdg-5) 84.7deg 105.9deg,
+    var(--sdg-6) 105.9deg 127.1deg,
+    var(--sdg-7) 127.1deg 148.2deg,
+    var(--sdg-8) 148.2deg 169.4deg,
+    var(--sdg-9) 169.4deg 190.6deg,
+    var(--sdg-10) 190.6deg 211.8deg,
+    var(--sdg-11) 211.8deg 232.9deg,
+    var(--sdg-12) 232.9deg 254.1deg,
+    var(--sdg-13) 254.1deg 275.3deg,
+    var(--sdg-14) 275.3deg 296.5deg,
+    var(--sdg-15) 296.5deg 317.6deg,
+    var(--sdg-16) 317.6deg 338.8deg,
+    var(--sdg-17) 338.8deg 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 59%);
+  mask: radial-gradient(circle, transparent 58%, #000 59%);
+  border-radius: 9999px;
+}
+
+/* Faint starfield in dark mode */
+.dark body {
+  background-image: radial-gradient(1px 1px at 12% 18%, rgba(238, 244, 250, 0.55), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(238, 244, 250, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 42% 8%, rgba(252, 195, 11, 0.7), transparent),
+    radial-gradient(1px 1px at 88% 34%, rgba(238, 244, 250, 0.35), transparent),
+    radial-gradient(1px 1px at 22% 46%, rgba(238, 244, 250, 0.25), transparent),
+    radial-gradient(1.5px 1.5px at 64% 28%, rgba(252, 195, 11, 0.45), transparent),
+    radial-gradient(1px 1px at 6% 72%, rgba(238, 244, 250, 0.3), transparent),
+    radial-gradient(1px 1px at 94% 64%, rgba(252, 195, 11, 0.35), transparent);
+  background-attachment: fixed;
+}
+
+/* Twinkling stars in the hero banner */
+.twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.7) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+/* Primary button: soft glow + light sweep on hover */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 22px -6px color-mix(in srgb, var(--accent-bg) 65%, transparent);
+}
+
+.btn-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+}
+
+.btn-glow:hover:not(:disabled)::after {
+  transform: translateX(120%);
+}
+
+/* Lift every content card slightly off the canvas */
+main section > .rounded-xl,
+main article.rounded-xl,
+main section.rounded-xl {
+  box-shadow: var(--card-shadow);
+}
+
+/* Visible keyboard focus for every interactive element */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Respect the user's "reduce motion" system setting */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

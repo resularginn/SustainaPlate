@@ -85,7 +85,7 @@ export function MultiDayResults({ result, t }: MultiDayResultsProps) {
             <div className="border-b border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-md bg-[var(--accent-bg)] text-[var(--accent-text)] text-xs font-semibold">
-                  {t.dayPrefix} {dayPlan.day}
+                  {t.dayLabelFormat.replace("{n}", String(dayPlan.day))}
                 </span>
                 <h3 className="text-base font-semibold text-[var(--text-primary)]">
                   {dayPlan.title}
