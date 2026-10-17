@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ZeroWaste",
+  title: "ZeroWaste Chef",
   description:
     "Minimalist domestic food rescue and 2-to-7 day spoilage-ordered meal planning powered by Google Gemini AI in support of UN SDG 12.3 and SDG 13.",
 };

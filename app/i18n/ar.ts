@@ -53,7 +53,7 @@ export const ar: TranslationDictionary = {
   requestFailedError: "فشل الطلب ({status}). يرجى التحقق من الإعدادات.",
   networkError: "حدث خطأ في الشبكة أثناء الاتصال بالخادم.",
   safetyAlertBadge: "تنبيه سلامة الغذاء",
-  safetyAlertTitle: "تم رصد مكوّنات تالفة أو خطرة — تخلّص منها بأمان",
+  safetyAlertTitle: "تنبيه سلامة الغذاء أو الحساسية أو الأمان",
   safetyPassedPrefix: "اجتاز فحص سلامة الغذاء:",
   singleResultHeader: "خطة إنقاذ وجبة واحدة",
   multiResultHeader: "جدول متعدد الأيام مرتّب حسب التلف",

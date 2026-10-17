@@ -53,7 +53,7 @@ export const zh: TranslationDictionary = {
   requestFailedError: "请求失败（{status}）。请检查您的配置。",
   networkError: "连接服务器时发生网络错误。",
   safetyAlertBadge: "食品安全警告",
-  safetyAlertTitle: "发现变质或有害食材——请安全丢弃",
+  safetyAlertTitle: "已触发食品安全、过敏原或安全防护提示",
   safetyPassedPrefix: "食品安全检查通过：",
   singleResultHeader: "单餐拯救方案",
   multiResultHeader: "按变质风险排序的多日日程",

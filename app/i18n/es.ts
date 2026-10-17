@@ -58,7 +58,7 @@ export const es: TranslationDictionary = {
   networkError: "Se produjo un error de red al conectar con el servidor.",
   safetyAlertBadge: "Alerta de seguridad alimentaria",
   safetyAlertTitle:
-    "Ingredientes en mal estado o peligrosos detectados: deséchalos de forma segura",
+    "Alerta de seguridad alimentaria, alérgenos o filtro de protección",
   safetyPassedPrefix: "Control de seguridad alimentaria superado:",
   singleResultHeader: "Plan de rescate de una comida",
   multiResultHeader: "Calendario de varios días según el deterioro",

@@ -82,7 +82,7 @@ ZeroWaste Chef supports **SDG Target 12.3**, which aims to halve per-capita hous
 
 The app opens in the visitor's browser language when it is supported, and falls back to English otherwise.
 
-> **Note:** The interface is fully translated. Generated recipes are currently returned in English or Turkish only. Extending the API prompt to the other languages is planned.
+> **Note:** Both the user interface and AI-generated recipes, spoilage rationales, and food-safety/allergen alerts are fully localized across all 7 supported languages.
 
 ## Getting Started
 
@@ -118,7 +118,7 @@ Your ingredients ──▶ Next.js API route ──▶ Gemini (schema-first JSON
                            (prompt-injection resistant, safety-checked)
 ```
 
-Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts).
+Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts), and the 2-page project report (SDG alignment, prompt engineering design, iterative tuning, and ethical evaluation) is available in [`ZeroWaste_Chef_Rapor.pdf`](./ZeroWaste_Chef_Rapor.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Rapor.tex)).
 
 ## Project Structure
 
@@ -136,9 +136,13 @@ app/
 ├── icon.svg                  SDG-coloured "0" favicon
 ├── layout.tsx                Root layout, fonts, metadata
 └── page.tsx                  Workspace tabs, forms, hero & footer
-docs/screenshots/             README screenshots
+docs/
+├── ZeroWaste_Chef_Rapor.pdf  2-page hackathon project report (PDF)
+├── ZeroWaste_Chef_Rapor.tex  LaTeX source of the project report
+└── screenshots/              README screenshots
 prompts/                      System prompt & user prompt template
 public/brand/                 Samsung, UNDP and SDG logos & icons
+ZeroWaste_Chef_Rapor.pdf      2-page hackathon project report (root copy)
 ```
 
 ## Food Safety

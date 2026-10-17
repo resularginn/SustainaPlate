@@ -257,7 +257,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       "Request failed ({status}). Please verify your configuration.",
     networkError: "Network error occurred while contacting the server.",
     safetyAlertBadge: "Food Safety Alert",
-    safetyAlertTitle: "Unsafe or Spoiled Ingredients Flagged — Discard Safely",
+    safetyAlertTitle:
+      "Food Safety, Allergen or Security Guardrail Triggered",
     safetyPassedPrefix: "Food Safety Verification Passed:",
     singleResultHeader: "Single Meal Rescue Plan",
     multiResultHeader: "Sequential Multi-Day Spoilage Schedule",
@@ -463,7 +464,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     networkError: "Sunucuya bağlanırken bir ağ hatası oluştu.",
     safetyAlertBadge: "Gıda Güvenliği Uyarısı",
     safetyAlertTitle:
-      "Bozulmuş veya Riskli Malzeme Tespit Edildi — Tüketmeyin",
+      "Gıda Güvenliği, Alerjen veya Güvenlik Kalkanı Devrede",
     safetyPassedPrefix: "Gıda Güvenliği Kontrolü Geçti:",
     singleResultHeader: "Tek Öğün Sıfır Atık Tarifi",
     multiResultHeader: "Bozulma Öncelikli Günlük Mutfak Planı",

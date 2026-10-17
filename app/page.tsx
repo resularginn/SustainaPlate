@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Header } from "@/app/components/Header";
 import { SingleMealResults } from "@/app/components/SingleMealResults";
@@ -20,6 +20,7 @@ import {
 
 const DAY_OPTIONS = [2, 3, 4, 5, 6, 7] as const;
 const SDG_GOALS = Array.from({ length: 17 }, (_, i) => i + 1);
+const STORAGE_KEY = "zerowaste_chef_prefs_v1";
 
 // Food emoji per scenario preset — universal, language-independent cues
 const PRESET_EMOJI: Record<string, string> = {
@@ -70,6 +71,7 @@ export default function ZeroWasteChefPage() {
   // Theme & Localization state (Defaults: Light mode, English)
   const [theme, setTheme] = useState<ThemeMode>("light");
   const [language, setLanguage] = useState<Language>("en");
+  const [prefsLoaded, setPrefsLoaded] = useState<boolean>(false);
 
   // Active operational workspace ("single" | "multi_day")
   const [mode, setMode] = useState<WorkspaceMode>("single");
@@ -101,32 +103,107 @@ export default function ZeroWasteChefPage() {
     null
   );
 
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
+
   const t = TRANSLATIONS[language];
 
-  // Start from the device's light/dark preference
+  // Hydrate saved user preferences or fall back to device/browser defaults
   useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    let saved: Partial<{
+      theme: ThemeMode;
+      language: Language;
+      singleServings: string;
+      multiServings: string;
+      singleDietary: string;
+      multiDietary: string;
+    }> | null = null;
+
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        saved = JSON.parse(raw);
+      }
+    } catch {
+      // Ignore localStorage read errors in restricted browsing modes
+    }
+
+    if (saved?.theme === "dark" || saved?.theme === "light") {
+      setTheme(saved.theme);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
     }
-  }, []);
 
-  // Start from the browser's preferred language when we support it
-  useEffect(() => {
-    const preferred = navigator.languages
+    const validSavedLang =
+      saved?.language &&
+      LANGUAGE_OPTIONS.some((opt) => opt.code === saved?.language)
+        ? saved.language
+        : null;
+
+    const preferredBrowserLang = navigator.languages
       .map((tag) => tag.slice(0, 2).toLowerCase())
-      .find((code) => LANGUAGE_OPTIONS.some((option) => option.code === code));
-    if (preferred && preferred !== "en") {
-      // Also swap the English example data for that language's presets
-      const dict = TRANSLATIONS[preferred as Language];
+      .find((code) =>
+        LANGUAGE_OPTIONS.some((option) => option.code === code)
+      ) as Language | undefined;
+
+    const initialLang: Language =
+      validSavedLang ?? preferredBrowserLang ?? "en";
+
+    if (initialLang !== "en") {
+      const dict = TRANSLATIONS[initialLang];
       const single = dict.singlePresets[0];
       const multi = dict.multiDayPresets[0];
-      setLanguage(preferred as Language);
+      setLanguage(initialLang);
       setSingleIngredients(single.ingredients);
-      setSingleDietary(single.dietaryNotes);
+      setSingleDietary(saved?.singleDietary ?? single.dietaryNotes);
       setMultiIngredients(multi.ingredients);
-      setMultiDietary(multi.dietaryNotes);
+      setMultiDietary(saved?.multiDietary ?? multi.dietaryNotes);
+    } else {
+      if (typeof saved?.singleDietary === "string") {
+        setSingleDietary(saved.singleDietary);
+      }
+      if (typeof saved?.multiDietary === "string") {
+        setMultiDietary(saved.multiDietary);
+      }
     }
+
+    if (typeof saved?.singleServings === "string") {
+      setSingleServings(saved.singleServings);
+    }
+    if (typeof saved?.multiServings === "string") {
+      setMultiServings(saved.multiServings);
+    }
+
+    setPrefsLoaded(true);
   }, []);
+
+  // Persist user preferences (theme, language, household size, allergy notes)
+  useEffect(() => {
+    if (!prefsLoaded) return;
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          theme,
+          language,
+          singleServings,
+          multiServings,
+          singleDietary,
+          multiDietary,
+        })
+      );
+    } catch {
+      // Ignore storage quota errors
+    }
+  }, [
+    prefsLoaded,
+    theme,
+    language,
+    singleServings,
+    multiServings,
+    singleDietary,
+    multiDietary,
+  ]);
 
   // Keep <html lang> and text direction in sync (Arabic is right-to-left)
   useEffect(() => {
@@ -220,6 +297,10 @@ export default function ZeroWasteChefPage() {
       return;
     }
 
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     setLoading(true);
     setError(null);
 
@@ -248,6 +329,7 @@ export default function ZeroWasteChefPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
       const data = await response.json();
@@ -265,7 +347,17 @@ export default function ZeroWasteChefPage() {
       } else {
         setMultiResult(data as MultiDayPlanResponse);
       }
+
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 80);
     } catch (err: unknown) {
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
       setError(err instanceof Error ? err.message : t.networkError);
     } finally {
       setLoading(false);
@@ -493,7 +585,11 @@ export default function ZeroWasteChefPage() {
               </div>
 
               {/* Form Inputs */}
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                aria-busy={loading}
+                className="space-y-6"
+              >
                 {/* Multi-Day 2–7 Day Horizon Selector (Only in Multi-Day Mode) */}
                 {mode === "multi_day" && (
                   <div className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] p-4 sm:p-5 space-y-3">
@@ -568,6 +664,7 @@ export default function ZeroWasteChefPage() {
                   <textarea
                     id="kitchen-ingredients"
                     rows={3}
+                    maxLength={1800}
                     value={
                       mode === "single" ? singleIngredients : multiIngredients
                     }
@@ -587,12 +684,12 @@ export default function ZeroWasteChefPage() {
                 </div>
 
                 {/* Parameters Row: Servings, Max Cooking Time, Dietary Restrictions */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
                   {/* Household Size */}
-                  <div>
+                  <div className="flex flex-col justify-between">
                     <label
                       htmlFor="servings-select"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider leading-snug text-[var(--text-secondary)] mb-2"
                     >
                       {t.servingsLabel}
                     </label>
@@ -604,7 +701,7 @@ export default function ZeroWasteChefPage() {
                           ? setSingleServings(e.target.value)
                           : setMultiServings(e.target.value)
                       }
-                      className="w-full rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 py-2.5 text-sm text-[var(--text-primary)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
+                      className="w-full h-10 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 text-sm text-[var(--text-primary)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
                     >
                       <option value="1 person">{t.servingsOptions.one}</option>
                       <option value="2 people">{t.servingsOptions.two}</option>
@@ -615,10 +712,10 @@ export default function ZeroWasteChefPage() {
                   </div>
 
                   {/* Max Cooking Time */}
-                  <div>
+                  <div className="flex flex-col justify-between">
                     <label
                       htmlFor="max-time-select"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider leading-snug text-[var(--text-secondary)] mb-2"
                     >
                       {t.maxTimeLabel}
                     </label>
@@ -630,7 +727,7 @@ export default function ZeroWasteChefPage() {
                           ? setSingleMaxTime(e.target.value)
                           : setMultiMaxTime(e.target.value)
                       }
-                      className="w-full rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 py-2.5 text-sm text-[var(--text-primary)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
+                      className="w-full h-10 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 text-sm text-[var(--text-primary)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
                     >
                       <option value="15 mins">{t.maxTimeOptions.fifteen}</option>
                       <option value="30 mins">{t.maxTimeOptions.thirty}</option>
@@ -639,10 +736,10 @@ export default function ZeroWasteChefPage() {
                   </div>
 
                   {/* Dietary Notes / Allergies */}
-                  <div>
+                  <div className="flex flex-col justify-between">
                     <label
                       htmlFor="dietary-input"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider leading-snug text-[var(--text-secondary)] mb-2"
                     >
                       {t.dietaryLabel}{" "}
                       <span className="font-normal lowercase text-[var(--text-muted)]">
@@ -652,6 +749,7 @@ export default function ZeroWasteChefPage() {
                     <input
                       id="dietary-input"
                       type="text"
+                      maxLength={400}
                       value={mode === "single" ? singleDietary : multiDietary}
                       onChange={(e) =>
                         mode === "single"
@@ -659,7 +757,7 @@ export default function ZeroWasteChefPage() {
                           : setMultiDietary(e.target.value)
                       }
                       placeholder={t.dietaryPlaceholder}
-                      className="w-full rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
+                      className="w-full h-10 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] px-3.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--border-strong)] focus:bg-[var(--bg-surface)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -698,34 +796,41 @@ export default function ZeroWasteChefPage() {
               </form>
             </section>
 
-            {/* Error Boundary Banner */}
-            {error && (
-              <section
-                role="alert"
-                className="rounded-xl border border-red-500/60 bg-red-500/10 p-5 text-[var(--text-primary)]"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                    !
-                  </span>
-                  <div className="space-y-1">
-                    <h2 className="text-sm font-semibold">{t.errorTitle}</h2>
-                    <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                      {error}
-                    </p>
+            {/* Live Results & Error Region */}
+            <div
+              ref={resultsRef}
+              aria-live="polite"
+              className="space-y-8 scroll-mt-24"
+            >
+              {/* Error Boundary Banner */}
+              {error && (
+                <section
+                  role="alert"
+                  className="rounded-xl border border-red-500/60 bg-red-500/10 p-5 text-[var(--text-primary)]"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                      !
+                    </span>
+                    <div className="space-y-1">
+                      <h2 className="text-sm font-semibold">{t.errorTitle}</h2>
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                        {error}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </section>
-            )}
+                </section>
+              )}
 
-            {/* Workspace-Specific Output Display */}
-            {mode === "single" && singleResult && (
-              <SingleMealResults result={singleResult} t={t} />
-            )}
+              {/* Workspace-Specific Output Display */}
+              {mode === "single" && singleResult && (
+                <SingleMealResults result={singleResult} t={t} />
+              )}
 
-            {mode === "multi_day" && multiResult && (
-              <MultiDayResults result={multiResult} t={t} />
-            )}
+              {mode === "multi_day" && multiResult && (
+                <MultiDayResults result={multiResult} t={t} />
+              )}
+            </div>
           </div>
 
           <SidePanel t={t} />
