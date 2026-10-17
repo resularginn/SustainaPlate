@@ -60,6 +60,10 @@
     0 12px 32px -16px rgba(0, 0, 0, 0.6);
 }
 
+html {
+  background-color: var(--bg-canvas);
+}
+
 body {
   background-color: var(--bg-canvas);
   color: var(--text-primary);

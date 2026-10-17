@@ -20,7 +20,7 @@ import {
 
 const DAY_OPTIONS = [2, 3, 4, 5, 6, 7] as const;
 const SDG_GOALS = Array.from({ length: 17 }, (_, i) => i + 1);
-const STORAGE_KEY = "zerowaste_chef_prefs_v1";
+const STORAGE_KEY = "sustainaplate_prefs_v1";
 
 // Food emoji per scenario preset — universal, language-independent cues
 const PRESET_EMOJI: Record<string, string> = {
@@ -67,9 +67,14 @@ function Sparkle({
   );
 }
 
-export default function ZeroWasteChefPage() {
-  // Theme & Localization state (Defaults: Light mode, English)
-  const [theme, setTheme] = useState<ThemeMode>("light");
+export default function SustainaPlatePage() {
+  // Theme & Localization state (Defaults match pre-rendered DOM state)
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof document !== "undefined" && document.documentElement.classList.contains("dark")) {
+      return "dark";
+    }
+    return "light";
+  });
   const [language, setLanguage] = useState<Language>("en");
   const [prefsLoaded, setPrefsLoaded] = useState<boolean>(false);
 
@@ -445,7 +450,7 @@ export default function ZeroWasteChefPage() {
               <div
                 role="tablist"
                 onKeyDown={handleTabKeyDown}
-                className="grid grid-cols-1 sm:grid-cols-2 p-1 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-pill)] gap-1 transition-colors duration-200"
+                className="grid grid-cols-1 sm:grid-cols-2 p-1.5 rounded-xl border border-[var(--border-hairline)] bg-[var(--bg-pill)] gap-2"
               >
                 <button
                   type="button"
@@ -455,25 +460,42 @@ export default function ZeroWasteChefPage() {
                   aria-controls="workspace-panel"
                   tabIndex={mode === "single" ? 0 : -1}
                   onClick={() => handleSelectMode("single")}
-                  className={`text-start px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
+                  className={`text-start px-4 py-3 rounded-lg border-2 cursor-pointer transition-colors duration-100 ${
                     mode === "single"
-                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-hairline)] shadow-2xs"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--accent-bg)] shadow-sm ring-1 ring-[var(--accent-bg)]/25"
+                      : "bg-transparent text-[var(--text-secondary)] border-transparent hover:bg-[var(--bg-surface)]/60 hover:text-[var(--text-primary)]"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-2 text-sm font-semibold">
-                      {/* Cooking pot */}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="w-4 h-4 text-[var(--accent-bg)]">
-                        <path d="M3 10h18M5 10v7a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-7M1.5 10H3M21 10h1.5M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2" />
-                      </svg>
-                      {t.tabSingleTitle}
-                    </span>
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-muted)]">
-                      01
-                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`flex items-center justify-center w-7 h-7 rounded-lg shrink-0 ${
+                          mode === "single"
+                            ? "bg-[var(--accent-bg)]/15 text-[var(--accent-bg)]"
+                            : "bg-[var(--bg-subtle)] text-[var(--text-muted)]"
+                        }`}
+                      >
+                        {/* Cooking pot */}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="w-4 h-4">
+                          <path d="M3 10h18M5 10v7a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-7M1.5 10H3M21 10h1.5M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2" />
+                        </svg>
+                      </div>
+                      <span className={`text-sm font-bold ${mode === "single" ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
+                        {t.tabSingleTitle}
+                      </span>
+                    </div>
+                    {mode === "single" ? (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)] shrink-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                        {language === "tr" ? "SEÇİLİ" : "ACTIVE"}
+                      </span>
+                    ) : (
+                      <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-muted)] shrink-0">
+                        01
+                      </span>
+                    )}
                   </div>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                  <p className="text-xs text-[var(--text-muted)] mt-1 ps-9.5">
                     {t.tabSingleSubtitle}
                   </p>
                 </button>
@@ -486,26 +508,43 @@ export default function ZeroWasteChefPage() {
                   aria-controls="workspace-panel"
                   tabIndex={mode === "multi_day" ? 0 : -1}
                   onClick={() => handleSelectMode("multi_day")}
-                  className={`text-start px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
+                  className={`text-start px-4 py-3 rounded-lg border-2 cursor-pointer transition-colors duration-100 ${
                     mode === "multi_day"
-                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-hairline)] shadow-2xs"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                      ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border-[var(--accent-bg)] shadow-sm ring-1 ring-[var(--accent-bg)]/25"
+                      : "bg-transparent text-[var(--text-secondary)] border-transparent hover:bg-[var(--bg-surface)]/60 hover:text-[var(--text-primary)]"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-2 text-sm font-semibold">
-                      {/* Calendar with a leaf */}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="w-4 h-4 text-[var(--accent-bg)]">
-                        <rect x="3" y="5" width="18" height="16" rx="2" />
-                        <path d="M3 10h18M8 3v4M16 3v4M10 18c0-3 2-5 5-5 0 3-2 5-5 5zM10 18l2.5-2.5" />
-                      </svg>
-                      {t.tabMultiTitle}
-                    </span>
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-muted)]">
-                      {t.daysShortFormat.replace("{n}", "2–7")}
-                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className={`flex items-center justify-center w-7 h-7 rounded-lg shrink-0 ${
+                          mode === "multi_day"
+                            ? "bg-[var(--accent-bg)]/15 text-[var(--accent-bg)]"
+                            : "bg-[var(--bg-subtle)] text-[var(--text-muted)]"
+                        }`}
+                      >
+                        {/* Calendar with a leaf */}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="w-4 h-4">
+                          <rect x="3" y="5" width="18" height="16" rx="2" />
+                          <path d="M3 10h18M8 3v4M16 3v4M10 18c0-3 2-5 5-5 0 3-2 5-5 5zM10 18l2.5-2.5" />
+                        </svg>
+                      </div>
+                      <span className={`text-sm font-bold ${mode === "multi_day" ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
+                        {t.tabMultiTitle}
+                      </span>
+                    </div>
+                    {mode === "multi_day" ? (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)] shrink-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                        {language === "tr" ? "SEÇİLİ" : "ACTIVE"}
+                      </span>
+                    ) : (
+                      <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-muted)] shrink-0">
+                        {t.daysShortFormat.replace("{n}", "2–7")}
+                      </span>
+                    )}
                   </div>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                  <p className="text-xs text-[var(--text-muted)] mt-1 ps-9.5">
                     {t.tabMultiSubtitle}
                   </p>
                 </button>

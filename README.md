@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="app/icon.svg" alt="ZeroWaste logo" width="88" />
+<img src="app/icon.svg" alt="SustainaPlate logo" width="88" />
 
-# ZeroWaste Chef
+# SustainaPlate
 
 **Cook what you have. Waste nothing.**
 
@@ -29,7 +29,7 @@ helping households halve their food waste.
 
 <br />
 
-<img src="docs/screenshots/desktop-light.png" alt="ZeroWaste Chef home screen in light mode" width="100%" />
+<img src="docs/screenshots/desktop-light.png" alt="SustainaPlate home screen in light mode" width="100%" />
 
 </div>
 
@@ -39,7 +39,7 @@ helping households halve their food waste.
 
 Households throw away about **60%** of all wasted food, and food loss and waste causes **8–10%** of global greenhouse gas emissions *(UNEP Food Waste Index Report 2024)*.
 
-ZeroWaste Chef supports **SDG Target 12.3**, which aims to halve per-capita household food waste, and **SDG 13 (Climate Action)**. It turns what is already in your kitchen into a clear, safe plan to cook it.
+SustainaPlate supports **SDG Target 12.3**, which aims to halve per-capita household food waste, and **SDG 13 (Climate Action)**. It turns what is already in your kitchen into a clear, safe plan to cook it.
 
 ## Features
 
@@ -119,8 +119,8 @@ Your ingredients ──▶ Next.js API route ──▶ Gemini (schema-first JSON
 ```
 
 Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts), and the 2-page bilingual hackathon project reports (SDG alignment, prompt engineering design, iterative tuning, and ethical evaluation) are available in:
-- **Turkish (TR):** [`ZeroWaste_Chef_Report_TR.pdf`](./ZeroWaste_Chef_Report_TR.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Report_TR.tex))
-- **English (ENG):** [`ZeroWaste_Chef_Report_ENG.pdf`](./ZeroWaste_Chef_Report_ENG.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Report_ENG.tex))
+- **Turkish (TR):** [`SustainaPlate_Report_TR.pdf`](./SustainaPlate_Report_TR.pdf) ([LaTeX source](./docs/SustainaPlate_Report_TR.tex))
+- **English (ENG):** [`SustainaPlate_Report_ENG.pdf`](./SustainaPlate_Report_ENG.pdf) ([LaTeX source](./docs/SustainaPlate_Report_ENG.tex))
 
 ## Project Structure
 
@@ -139,20 +139,20 @@ app/
 ├── layout.tsx                    Root layout, fonts, metadata
 └── page.tsx                      Workspace tabs, forms, hero & footer
 docs/
-├── ZeroWaste_Chef_Report_TR.pdf  2-page hackathon project report (TR, PDF)
-├── ZeroWaste_Chef_Report_TR.tex  LaTeX source of the TR project report
-├── ZeroWaste_Chef_Report_ENG.pdf 2-page hackathon project report (ENG, PDF)
-├── ZeroWaste_Chef_Report_ENG.tex LaTeX source of the ENG project report
+├── SustainaPlate_Report_TR.pdf   2-page hackathon project report (TR, PDF)
+├── SustainaPlate_Report_TR.tex   LaTeX source of the TR project report
+├── SustainaPlate_Report_ENG.pdf  2-page hackathon project report (ENG, PDF)
+├── SustainaPlate_Report_ENG.tex  LaTeX source of the ENG project report
 └── screenshots/                  README screenshots
 prompts/                          System prompt & user prompt template
 public/brand/                     Samsung, UNDP and SDG logos & icons
-ZeroWaste_Chef_Report_TR.pdf      2-page hackathon project report (TR root copy)
-ZeroWaste_Chef_Report_ENG.pdf     2-page hackathon project report (ENG root copy)
+SustainaPlate_Report_TR.pdf       2-page hackathon project report (TR root copy)
+SustainaPlate_Report_ENG.pdf      2-page hackathon project report (ENG root copy)
 ```
 
 ## Food Safety
 
-ZeroWaste Chef offers cooking suggestions for educational and sustainability purposes. Always check ingredients for mold, off-odors or spoilage, confirm allergen safety, and cook perishable food to a safe internal temperature.
+SustainaPlate offers cooking suggestions for educational and sustainability purposes. Always check ingredients for mold, off-odors or spoilage, confirm allergen safety, and cook perishable food to a safe internal temperature.
 
 ## Acknowledgements
 

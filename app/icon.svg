@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- ZeroWaste mark: a "0" made of the 17 SDG colours, with a UNDP-blue star -->
+  <!-- SustainaPlate mark: a "0" made of the 17 SDG colours, with a UNDP-blue star -->
   <rect width="64" height="64" rx="14" fill="#ffffff"/>
   <g fill="none" stroke-width="8.5">
   <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#e5243b" stroke-dasharray="0.9 16.1" stroke-dashoffset="0"/>

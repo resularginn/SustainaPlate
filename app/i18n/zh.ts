@@ -1,7 +1,7 @@
 import type { TranslationDictionary } from "@/app/types";
 
 export const zh: TranslationDictionary = {
-  brandName: "ZeroWaste Chef",
+  brandName: "SustainaPlate",
   brandSubtitle: "家庭食物拯救与多日膳食规划",
   sdgBadge12: "可持续发展目标 12 · 负责任消费和生产",
   sdgBadge13: "可持续发展目标 13 · 气候行动",
@@ -75,7 +75,7 @@ export const zh: TranslationDictionary = {
   spoilageScheduleNote: "变质优先级说明",
   footerDisclaimerBadge: "食品安全与卫生提示",
   footerDisclaimerText:
-    "ZeroWaste Chef 出于可持续发展和教育目的提供烹饪建议。请务必检查食材是否有霉变、异味或腐坏，确认过敏原安全，并将易腐食品加热至安全的中心温度。",
+    "SustainaPlate 出于可持续发展和教育目的提供烹饪建议。请务必检查食材是否有霉变、异味或腐坏，确认过敏原安全，并将易腐食品加热至安全的中心温度。",
   footerMeta: "联合国可持续发展目标 12.3 和 13 学术原型",
   footerSupportText:
     "本项目在三星创新校园（Samsung Innovation Campus）计划中开发，旨在支持联合国开发计划署（UNDP）和可持续发展目标。",
@@ -84,7 +84,7 @@ export const zh: TranslationDictionary = {
   samsungLogoAlt: "三星标志",
   sdgGoalsHeading: "17 项全球目标",
   sdgGoalsText:
-    "ZeroWaste Chef 直接助力 17 项可持续发展目标中的目标 12 和目标 13。",
+    "SustainaPlate 直接助力 17 项可持续发展目标中的目标 12 和目标 13。",
   asideLabel: "指南、技巧与影响",
   asideHowTitle: "使用方法",
   asideHowSteps: [

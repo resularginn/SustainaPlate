@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ZeroWaste Chef",
+  title: "SustainaPlate",
   description:
     "Minimalist domestic food rescue and 2-to-7 day spoilage-ordered meal planning powered by Google Gemini AI in support of UN SDG 12.3 and SDG 13.",
 };
@@ -27,7 +27,16 @@ export default function RootLayout({
       suppressHydrationWarning
       className={inter.variable}
     >
-      <body className="min-h-screen antialiased">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k="sustainaplate_prefs_v1",r=localStorage.getItem(k),t=null;if(r){try{t=JSON.parse(r).theme}catch(e){}}if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}if(t==="dark"){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-screen antialiased bg-[var(--bg-canvas)] text-[var(--text-primary)]">
+        {children}
+      </body>
     </html>
   );
 }

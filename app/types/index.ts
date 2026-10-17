@@ -76,7 +76,7 @@ export interface MultiDayPlanResponse {
   self_check_passed: boolean;
 }
 
-export type ZeroWasteApiResponse = SingleMealResponse | MultiDayPlanResponse;
+export type SustainaPlateApiResponse = SingleMealResponse | MultiDayPlanResponse;
 
 export interface SinglePreset {
   id: string;
@@ -201,7 +201,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
   ru,
   es,
   en: {
-    brandName: "ZeroWaste Chef",
+    brandName: "SustainaPlate",
     brandSubtitle: "Domestic Food Rescue & Multi-Day Planning Engine",
     sdgBadge12: "SDG 12 · Responsible Consumption and Production",
     sdgBadge13: "SDG 13 · Climate Action",
@@ -281,7 +281,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     spoilageScheduleNote: "Spoilage Priority Rationale",
     footerDisclaimerBadge: "Food Safety & Hygiene Notice",
     footerDisclaimerText:
-      "ZeroWaste Chef generates culinary suggestions for sustainability and educational purposes. Always inspect ingredients for mold, off-odors, or physical spoilage, verify personal allergen safety, and cook perishable foods to safe internal temperatures.",
+      "SustainaPlate generates culinary suggestions for sustainability and educational purposes. Always inspect ingredients for mold, off-odors, or physical spoilage, verify personal allergen safety, and cook perishable foods to safe internal temperatures.",
     footerMeta: "UN SDG 12.3 & SDG 13 Academic Prototype",
     footerSupportText:
       "Built within the Samsung Innovation Campus program in support of the United Nations Development Programme (UNDP) and the Sustainable Development Goals.",
@@ -290,7 +290,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     samsungLogoAlt: "Samsung logo",
     sdgGoalsHeading: "The 17 Global Goals",
     sdgGoalsText:
-      "ZeroWaste Chef contributes directly to SDG 12 and SDG 13 — two of the 17 Sustainable Development Goals.",
+      "SustainaPlate contributes directly to SDG 12 and SDG 13 — two of the 17 Sustainable Development Goals.",
     asideLabel: "Guide, tips and impact",
     asideHowTitle: "How It Works",
     asideHowSteps: [
@@ -407,7 +407,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     ],
   },
   tr: {
-    brandName: "ZeroWaste Chef",
+    brandName: "SustainaPlate",
     brandSubtitle: "Evsel Gıda Kurtarma ve Çok Günlü Planlama Motoru",
     sdgBadge12: "SKA 12 · Sorumlu Üretim ve Tüketim",
     sdgBadge13: "SKA 13 · İklim Eylemi",
@@ -487,7 +487,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     spoilageScheduleNote: "Bozulma Önceliği Gerekçesi",
     footerDisclaimerBadge: "Gıda Güvenliği ve Hijyen Bildirimi",
     footerDisclaimerText:
-      "ZeroWaste Chef, sürdürülebilirlik ve eğitim amacıyla yapay zekâ destekli mutfak önerileri sunar. Malzemeleri küf, kötü koku veya bozulma açısından daima kontrol edin; alerjen uyumluluğunu doğrulayın ve gıdaları güvenli iç sıcaklıklarda pişirin.",
+      "SustainaPlate, sürdürülebilirlik ve eğitim amacıyla yapay zekâ destekli mutfak önerileri sunar. Malzemeleri küf, kötü koku veya bozulma açısından daima kontrol edin; alerjen uyumluluğunu doğrulayın ve gıdaları güvenli iç sıcaklıklarda pişirin.",
     footerMeta: "BM SKA 12.3 & SKA 13 Akademik Prototip",
     footerSupportText:
       "Samsung Innovation Campus programı kapsamında, Birleşmiş Milletler Kalkınma Programı (UNDP) ve Sürdürülebilir Kalkınma Amaçları'nı desteklemek amacıyla geliştirilmiştir.",
@@ -496,7 +496,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     samsungLogoAlt: "Samsung logosu",
     sdgGoalsHeading: "17 Küresel Amaç",
     sdgGoalsText:
-      "ZeroWaste Chef, 17 Sürdürülebilir Kalkınma Amacı'ndan SKA 12 ve SKA 13'e doğrudan katkı sağlar.",
+      "SustainaPlate, 17 Sürdürülebilir Kalkınma Amacı'ndan SKA 12 ve SKA 13'e doğrudan katkı sağlar.",
     asideLabel: "Rehber, ipuçları ve etki",
     asideHowTitle: "Nasıl Çalışır?",
     asideHowSteps: [

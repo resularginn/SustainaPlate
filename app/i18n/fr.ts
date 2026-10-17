@@ -1,7 +1,7 @@
 import type { TranslationDictionary } from "@/app/types";
 
 export const fr: TranslationDictionary = {
-  brandName: "ZeroWaste Chef",
+  brandName: "SustainaPlate",
   brandSubtitle: "Sauvetage alimentaire et planification des repas sur plusieurs jours",
   sdgBadge12: "ODD 12 · Consommation et production responsables",
   sdgBadge13: "ODD 13 · Lutte contre les changements climatiques",
@@ -81,7 +81,7 @@ export const fr: TranslationDictionary = {
   spoilageScheduleNote: "Justification selon le risque d'altération",
   footerDisclaimerBadge: "Avis de sécurité et d'hygiène alimentaires",
   footerDisclaimerText:
-    "ZeroWaste Chef propose des suggestions culinaires à des fins éducatives et de durabilité. Vérifiez toujours l'absence de moisissure, d'odeur suspecte ou d'altération, assurez-vous de l'absence d'allergènes et cuisez les aliments périssables à une température interne sûre.",
+    "SustainaPlate propose des suggestions culinaires à des fins éducatives et de durabilité. Vérifiez toujours l'absence de moisissure, d'odeur suspecte ou d'altération, assurez-vous de l'absence d'allergènes et cuisez les aliments périssables à une température interne sûre.",
   footerMeta: "Prototype académique ODD 12.3 et ODD 13 de l'ONU",
   footerSupportText:
     "Développé dans le cadre du programme Samsung Innovation Campus, en soutien au Programme des Nations Unies pour le développement (PNUD) et aux Objectifs de développement durable.",
@@ -90,7 +90,7 @@ export const fr: TranslationDictionary = {
   samsungLogoAlt: "Logo Samsung",
   sdgGoalsHeading: "Les 17 objectifs mondiaux",
   sdgGoalsText:
-    "ZeroWaste Chef contribue directement aux ODD 12 et 13 — deux des 17 Objectifs de développement durable.",
+    "SustainaPlate contribue directement aux ODD 12 et 13 — deux des 17 Objectifs de développement durable.",
   asideLabel: "Guide, conseils et impact",
   asideHowTitle: "Comment ça marche",
   asideHowSteps: [

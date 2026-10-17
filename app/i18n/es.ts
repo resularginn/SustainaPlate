@@ -1,7 +1,7 @@
 import type { TranslationDictionary } from "@/app/types";
 
 export const es: TranslationDictionary = {
-  brandName: "ZeroWaste Chef",
+  brandName: "SustainaPlate",
   brandSubtitle: "Rescate de alimentos y planificación de comidas para varios días",
   sdgBadge12: "ODS 12 · Producción y consumo responsables",
   sdgBadge13: "ODS 13 · Acción por el clima",
@@ -81,7 +81,7 @@ export const es: TranslationDictionary = {
   spoilageScheduleNote: "Justificación según el riesgo de deterioro",
   footerDisclaimerBadge: "Aviso de seguridad e higiene alimentaria",
   footerDisclaimerText:
-    "ZeroWaste Chef ofrece sugerencias culinarias con fines educativos y de sostenibilidad. Revisa siempre que los ingredientes no tengan moho, mal olor ni deterioro, comprueba los alérgenos y cocina los alimentos perecederos a una temperatura interna segura.",
+    "SustainaPlate ofrece sugerencias culinarias con fines educativos y de sostenibilidad. Revisa siempre que los ingredientes no tengan moho, mal olor ni deterioro, comprueba los alérgenos y cocina los alimentos perecederos a una temperatura interna segura.",
   footerMeta: "Prototipo académico ODS 12.3 y ODS 13 de la ONU",
   footerSupportText:
     "Desarrollado en el programa Samsung Innovation Campus, en apoyo del Programa de las Naciones Unidas para el Desarrollo (PNUD) y los Objetivos de Desarrollo Sostenible.",
@@ -90,7 +90,7 @@ export const es: TranslationDictionary = {
   samsungLogoAlt: "Logotipo de Samsung",
   sdgGoalsHeading: "Los 17 Objetivos Mundiales",
   sdgGoalsText:
-    "ZeroWaste Chef contribuye directamente a los ODS 12 y 13, dos de los 17 Objetivos de Desarrollo Sostenible.",
+    "SustainaPlate contribuye directamente a los ODS 12 y 13, dos de los 17 Objetivos de Desarrollo Sostenible.",
   asideLabel: "Guía, consejos e impacto",
   asideHowTitle: "Cómo funciona",
   asideHowSteps: [
