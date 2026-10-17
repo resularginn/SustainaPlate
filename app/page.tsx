@@ -35,14 +35,15 @@ const PRESET_EMOJI: Record<string, string> = {
 const presetEmoji = (id: string) =>
   PRESET_EMOJI[id.replace(/-(ar|zh|fr|ru|es|tr)$/, "")];
 
-// Twinkling hero stars: position, size (px), animation delay (s) and colour
+// Twinkling hero stars, kept clear of the text. `start` is measured from the
+// reading side, so the stars mirror for right-to-left languages.
 const HERO_STARS = [
-  { top: "14%", left: "52%", size: 14, delay: 0, gold: true },
-  { top: "70%", left: "46%", size: 10, delay: 1.1, gold: false },
-  { top: "24%", left: "88%", size: 12, delay: 0.6, gold: false },
-  { top: "80%", left: "92%", size: 16, delay: 1.8, gold: true },
-  { top: "8%", left: "6%", size: 9, delay: 2.4, gold: false },
-  { top: "86%", left: "18%", size: 11, delay: 0.3, gold: true },
+  { top: "8%", start: "58%", size: 14, delay: 0, gold: true, desktopOnly: true },
+  { top: "82%", start: "60%", size: 10, delay: 1.1, gold: false, desktopOnly: true },
+  { top: "16%", start: "95%", size: 12, delay: 0.6, gold: false },
+  { top: "86%", start: "93%", size: 16, delay: 1.8, gold: true },
+  { top: "4%", start: "2%", size: 9, delay: 2.4, gold: false },
+  { top: "93%", start: "40%", size: 11, delay: 0.3, gold: true },
 ];
 
 function Sparkle({
@@ -114,8 +115,16 @@ export default function ZeroWasteChefPage() {
     const preferred = navigator.languages
       .map((tag) => tag.slice(0, 2).toLowerCase())
       .find((code) => LANGUAGE_OPTIONS.some((option) => option.code === code));
-    if (preferred) {
+    if (preferred && preferred !== "en") {
+      // Also swap the English example data for that language's presets
+      const dict = TRANSLATIONS[preferred as Language];
+      const single = dict.singlePresets[0];
+      const multi = dict.multiDayPresets[0];
       setLanguage(preferred as Language);
+      setSingleIngredients(single.ingredients);
+      setSingleDietary(single.dietaryNotes);
+      setMultiIngredients(multi.ingredients);
+      setMultiDietary(multi.dietaryNotes);
     }
   }, []);
 
@@ -259,14 +268,14 @@ export default function ZeroWasteChefPage() {
         <section className="hero-banner relative overflow-hidden rounded-2xl text-white">
           <div
             aria-hidden="true"
-            className="sdg-ring absolute -right-24 -top-24 w-80 h-80 opacity-20 pointer-events-none"
+            className="sdg-ring absolute -end-24 -top-24 w-80 h-80 opacity-20 pointer-events-none"
           />
           {HERO_STARS.map((star, idx) => (
             <span
               key={idx}
               aria-hidden="true"
-              className="absolute pointer-events-none"
-              style={{ top: star.top, left: star.left }}
+              className={`absolute pointer-events-none ${star.desktopOnly ? "hidden md:block" : ""}`}
+              style={{ top: star.top, insetInlineStart: star.start }}
             >
               <Sparkle
                 className={`twinkle block ${star.gold ? "text-[#fcc30b]" : "text-white"}`}
@@ -408,7 +417,7 @@ export default function ZeroWasteChefPage() {
                 </div>
 
                 {mode === "single" ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {t.singlePresets.map((preset) => (
                       <button
                         key={preset.id}
