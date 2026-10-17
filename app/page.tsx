@@ -7,6 +7,7 @@ import { SingleMealResults } from "@/app/components/SingleMealResults";
 import { MultiDayResults } from "@/app/components/MultiDayResults";
 import { SidePanel } from "@/app/components/SidePanel";
 import {
+  LANGUAGE_OPTIONS,
   TRANSLATIONS,
   type Language,
   type MultiDayPlanResponse,
@@ -30,6 +31,9 @@ const PRESET_EMOJI: Record<string, string> = {
   "five-day-household": "🧺",
   "seven-day-full-week": "🥗",
 };
+
+const presetEmoji = (id: string) =>
+  PRESET_EMOJI[id.replace(/-(ar|zh|fr|ru|es|tr)$/, "")];
 
 // Twinkling hero stars: position, size (px), animation delay (s) and colour
 const HERO_STARS = [
@@ -105,9 +109,22 @@ export default function ZeroWasteChefPage() {
     }
   }, []);
 
-  // Keep <html lang> in sync so screen readers & browser translation use the right language
+  // Start from the browser's preferred language when we support it
   useEffect(() => {
-    document.documentElement.lang = language;
+    const preferred = navigator.languages
+      .map((tag) => tag.slice(0, 2).toLowerCase())
+      .find((code) => LANGUAGE_OPTIONS.some((option) => option.code === code));
+    if (preferred) {
+      setLanguage(preferred as Language);
+    }
+  }, []);
+
+  // Keep <html lang> and text direction in sync (Arabic is right-to-left)
+  useEffect(() => {
+    const root = document.documentElement;
+    root.lang = language;
+    root.dir =
+      LANGUAGE_OPTIONS.find((option) => option.code === language)?.dir ?? "ltr";
   }, [language]);
 
   // Synchronize root `.dark` class for smooth CSS transitions
@@ -302,7 +319,7 @@ export default function ZeroWasteChefPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-8 items-start">
           <div className="space-y-8 min-w-0">
             {/* Two-Segment Workspace Navigation Control */}
-            <section aria-label="Workspace selector">
+            <section aria-label={t.workspaceSelectorLabel}>
               <div
                 role="tablist"
                 onKeyDown={handleTabKeyDown}
@@ -316,7 +333,7 @@ export default function ZeroWasteChefPage() {
                   aria-controls="workspace-panel"
                   tabIndex={mode === "single" ? 0 : -1}
                   onClick={() => handleSelectMode("single")}
-                  className={`text-left px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
+                  className={`text-start px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
                     mode === "single"
                       ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-hairline)] shadow-2xs"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -347,7 +364,7 @@ export default function ZeroWasteChefPage() {
                   aria-controls="workspace-panel"
                   tabIndex={mode === "multi_day" ? 0 : -1}
                   onClick={() => handleSelectMode("multi_day")}
-                  className={`text-left px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
+                  className={`text-start px-4 py-3 rounded-lg transition-all duration-150 cursor-pointer ${
                     mode === "multi_day"
                       ? "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-hairline)] shadow-2xs"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -363,7 +380,7 @@ export default function ZeroWasteChefPage() {
                       {t.tabMultiTitle}
                     </span>
                     <span className="text-[11px] font-medium px-2 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-muted)]">
-                      2–7d
+                      {t.daysShortFormat.replace("{n}", "2–7")}
                     </span>
                   </div>
                   <p className="text-xs text-[var(--text-muted)] mt-0.5">
@@ -397,12 +414,12 @@ export default function ZeroWasteChefPage() {
                         key={preset.id}
                         type="button"
                         onClick={() => handleApplySinglePreset(preset)}
-                        className="text-left p-3 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
+                        className="text-start p-3 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
                       >
                         <div className="flex items-center justify-between gap-1.5 mb-1">
                           <span className="text-xs font-semibold text-[var(--text-primary)] truncate">
-                            <span aria-hidden="true" className="mr-1.5">
-                              {PRESET_EMOJI[preset.id]}
+                            <span aria-hidden="true" className="me-1.5">
+                              {presetEmoji(preset.id)}
                             </span>
                             {preset.label}
                           </span>
@@ -423,12 +440,12 @@ export default function ZeroWasteChefPage() {
                         key={preset.id}
                         type="button"
                         onClick={() => handleApplyMultiPreset(preset)}
-                        className="text-left p-3.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
+                        className="text-start p-3.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-subtle)] hover:border-[var(--border-strong)] transition-colors cursor-pointer"
                       >
                         <div className="flex items-center justify-between gap-2 mb-1">
                           <span className="text-xs font-semibold text-[var(--text-primary)]">
-                            <span aria-hidden="true" className="mr-1.5">
-                              {PRESET_EMOJI[preset.id]}
+                            <span aria-hidden="true" className="me-1.5">
+                              {presetEmoji(preset.id)}
                             </span>
                             {preset.label}
                           </span>
@@ -480,7 +497,7 @@ export default function ZeroWasteChefPage() {
                                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                             }`}
                           >
-                            {dayNum}d
+                            {t.daysShortFormat.replace("{n}", String(dayNum))}
                           </button>
                         ))}
                       </div>
@@ -642,7 +659,7 @@ export default function ZeroWasteChefPage() {
                         <span>
                           {mode === "single"
                             ? t.submitSingleBtn
-                            : `${t.submitMultiBtn} (${targetDays}d)`}
+                            : `${t.submitMultiBtn} (${t.daysShortFormat.replace("{n}", String(targetDays))})`}
                         </span>
                       </>
                     )}
