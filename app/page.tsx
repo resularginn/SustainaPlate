@@ -151,6 +151,27 @@ export default function ZeroWasteChefPage() {
   };
 
   const handleLanguageChange = (nextLang: Language) => {
+    const currentDict = TRANSLATIONS[language];
+    const nextDict = TRANSLATIONS[nextLang];
+
+    const matchedSingleIdx = currentDict.singlePresets.findIndex(
+      (p) => p.ingredients === singleIngredients
+    );
+    if (matchedSingleIdx !== -1 && nextDict.singlePresets[matchedSingleIdx]) {
+      const nextSingle = nextDict.singlePresets[matchedSingleIdx];
+      setSingleIngredients(nextSingle.ingredients);
+      setSingleDietary(nextSingle.dietaryNotes);
+    }
+
+    const matchedMultiIdx = currentDict.multiDayPresets.findIndex(
+      (p) => p.ingredients === multiIngredients
+    );
+    if (matchedMultiIdx !== -1 && nextDict.multiDayPresets[matchedMultiIdx]) {
+      const nextMulti = nextDict.multiDayPresets[matchedMultiIdx];
+      setMultiIngredients(nextMulti.ingredients);
+      setMultiDietary(nextMulti.dietaryNotes);
+    }
+
     setLanguage(nextLang);
     setError(null);
   };
