@@ -118,31 +118,36 @@ Your ingredients ──▶ Next.js API route ──▶ Gemini (schema-first JSON
                            (prompt-injection resistant, safety-checked)
 ```
 
-Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts), and the 2-page project report (SDG alignment, prompt engineering design, iterative tuning, and ethical evaluation) is available in [`ZeroWaste_Chef_Rapor.pdf`](./ZeroWaste_Chef_Rapor.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Rapor.tex)).
+Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts), and the 2-page bilingual hackathon project reports (SDG alignment, prompt engineering design, iterative tuning, and ethical evaluation) are available in:
+- **Turkish (TR):** [`ZeroWaste_Chef_Report_TR.pdf`](./ZeroWaste_Chef_Report_TR.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Report_TR.tex))
+- **English (ENG):** [`ZeroWaste_Chef_Report_ENG.pdf`](./ZeroWaste_Chef_Report_ENG.pdf) ([LaTeX source](./docs/ZeroWaste_Chef_Report_ENG.tex))
 
 ## Project Structure
 
 ```text
 app/
-├── api/generate/route.ts     Gemini API route (single & multi-day modes)
+├── api/generate/route.ts         Gemini API route (single & multi-day modes)
 ├── components/
-│   ├── Header.tsx            Logo, language dropdown, theme toggle
-│   ├── SidePanel.tsx         How it works, food-saving tips, UNEP impact stats
-│   ├── SingleMealResults.tsx Single meal recipe card & safety banner
-│   └── MultiDayResults.tsx   Day-by-day plan timeline
-├── i18n/                     Arabic, Chinese, French, Russian, Spanish
-├── types/index.ts            Types, language list, English & Turkish text
-├── globals.css               Theme tokens, SDG colours, accessibility rules
-├── icon.svg                  SDG-coloured "0" favicon
-├── layout.tsx                Root layout, fonts, metadata
-└── page.tsx                  Workspace tabs, forms, hero & footer
+│   ├── Header.tsx                Logo, language dropdown, theme toggle
+│   ├── SidePanel.tsx             How it works, food-saving tips, UNEP impact stats
+│   ├── SingleMealResults.tsx     Single meal recipe card & safety banner
+│   └── MultiDayResults.tsx       Day-by-day plan timeline
+├── i18n/                         Arabic, Chinese, French, Russian, Spanish
+├── types/index.ts                Types, language list, English & Turkish text
+├── globals.css                   Theme tokens, SDG colours, accessibility rules
+├── icon.svg                      SDG-coloured "0" favicon
+├── layout.tsx                    Root layout, fonts, metadata
+└── page.tsx                      Workspace tabs, forms, hero & footer
 docs/
-├── ZeroWaste_Chef_Rapor.pdf  2-page hackathon project report (PDF)
-├── ZeroWaste_Chef_Rapor.tex  LaTeX source of the project report
-└── screenshots/              README screenshots
-prompts/                      System prompt & user prompt template
-public/brand/                 Samsung, UNDP and SDG logos & icons
-ZeroWaste_Chef_Rapor.pdf      2-page hackathon project report (root copy)
+├── ZeroWaste_Chef_Report_TR.pdf  2-page hackathon project report (TR, PDF)
+├── ZeroWaste_Chef_Report_TR.tex  LaTeX source of the TR project report
+├── ZeroWaste_Chef_Report_ENG.pdf 2-page hackathon project report (ENG, PDF)
+├── ZeroWaste_Chef_Report_ENG.tex LaTeX source of the ENG project report
+└── screenshots/                  README screenshots
+prompts/                          System prompt & user prompt template
+public/brand/                     Samsung, UNDP and SDG logos & icons
+ZeroWaste_Chef_Report_TR.pdf      2-page hackathon project report (TR root copy)
+ZeroWaste_Chef_Report_ENG.pdf     2-page hackathon project report (ENG root copy)
 ```
 
 ## Food Safety
