@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import type {
   Language,
   ThemeMode,
@@ -24,23 +25,27 @@ export function Header({
 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--border-hairline)] bg-[var(--bg-surface)]/90 backdrop-blur-md transition-colors duration-200">
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      {/* 17-colour SDG stripe */}
+      <div aria-hidden="true" className="sdg-stripe h-1" />
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
         {/* Left: Brand Identity & SDG Badges */}
         <div className="flex items-center gap-4 min-w-0">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded-lg border border-[var(--border-strong)] bg-[var(--accent-bg)] text-[var(--accent-text)] flex items-center justify-center font-semibold text-xs tracking-tight shrink-0 transition-colors duration-200">
-              ZW
-            </div>
+            {/* Official UNDP logo (kept unaltered on a white plate so it stays legible in dark mode) */}
+            <span className="shrink-0 rounded-sm bg-white p-0.5">
+              <Image
+                src="/brand/undp-logo.svg"
+                alt={t.undpLogoAlt}
+                width={20}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
+            </span>
             <div className="truncate">
               <div className="flex items-center gap-2.5">
-                <span className="text-base font-semibold tracking-tight text-[var(--text-primary)]">
+                <span className="text-base font-bold tracking-tight text-[var(--text-primary)]">
                   {t.brandName}
-                </span>
-                <span className="hidden md:inline-block text-[11px] font-medium px-2 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-secondary)]">
-                  {t.sdgBadge12}
-                </span>
-                <span className="hidden lg:inline-block text-[11px] font-medium px-2 py-0.5 rounded border border-[var(--border-hairline)] bg-[var(--bg-subtle)] text-[var(--text-secondary)]">
-                  {t.sdgBadge13}
                 </span>
               </div>
               <p className="text-xs text-[var(--text-muted)] truncate hidden sm:block">

@@ -121,6 +121,8 @@ export interface TranslationDictionary {
   loadingMultiText: string;
   errorTitle: string;
   emptyIngredientsError: string;
+  requestFailedError: string;
+  networkError: string;
   safetyAlertBadge: string;
   safetyAlertTitle: string;
   safetyPassedPrefix: string;
@@ -145,6 +147,20 @@ export interface TranslationDictionary {
   footerDisclaimerBadge: string;
   footerDisclaimerText: string;
   footerMeta: string;
+  footerSupportText: string;
+  undpLogoAlt: string;
+  sdgLogoAlt: string;
+  samsungLogoAlt: string;
+  sdgGoalsHeading: string;
+  sdgGoalsText: string;
+  asideLabel: string;
+  asideHowTitle: string;
+  asideHowSteps: string[];
+  asideTipsTitle: string;
+  asideTips: { emoji: string; text: string }[];
+  asideImpactTitle: string;
+  asideImpactStats: { value: string; label: string }[];
+  asideImpactSource: string;
   singlePresets: SinglePreset[];
   multiDayPresets: MultiDayPreset[];
 }
@@ -153,7 +169,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
   en: {
     brandName: "ZeroWaste Chef",
     brandSubtitle: "Domestic Food Rescue & Multi-Day Planning Engine",
-    sdgBadge12: "SDG 12.3 · Zero Waste",
+    sdgBadge12: "SDG 12 · Responsible Consumption and Production",
     sdgBadge13: "SDG 13 · Climate Action",
     themeLight: "Light",
     themeDark: "Dark",
@@ -203,6 +219,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     errorTitle: "Request Could Not Be Completed",
     emptyIngredientsError:
       "Please enter at least a few ingredients before generating a plan.",
+    requestFailedError:
+      "Request failed ({status}). Please verify your configuration.",
+    networkError: "Network error occurred while contacting the server.",
     safetyAlertBadge: "Food Safety Alert",
     safetyAlertTitle: "Unsafe or Spoiled Ingredients Flagged — Discard Safely",
     safetyPassedPrefix: "Food Safety Verification Passed:",
@@ -229,6 +248,47 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     footerDisclaimerText:
       "ZeroWaste Chef generates culinary suggestions for sustainability and educational purposes. Always inspect ingredients for mold, off-odors, or physical spoilage, verify personal allergen safety, and cook perishable foods to safe internal temperatures.",
     footerMeta: "UN SDG 12.3 & SDG 13 Academic Prototype",
+    footerSupportText:
+      "Built within the Samsung Innovation Campus program in support of the United Nations Development Programme (UNDP) and the Sustainable Development Goals.",
+    undpLogoAlt: "United Nations Development Programme (UNDP) logo",
+    sdgLogoAlt: "Sustainable Development Goals logo",
+    samsungLogoAlt: "Samsung logo",
+    sdgGoalsHeading: "The 17 Global Goals",
+    sdgGoalsText:
+      "ZeroWaste Chef contributes directly to SDG 12 and SDG 13 — two of the 17 Sustainable Development Goals.",
+    asideLabel: "Guide, tips and impact",
+    asideHowTitle: "How It Works",
+    asideHowSteps: [
+      "List what you have — especially items close to spoiling.",
+      "Choose a single meal rescue or a 2–7 day plan.",
+      "Cook in spoilage order and waste nothing.",
+    ],
+    asideTipsTitle: "Food-Saving Tips",
+    asideTips: [
+      { emoji: "🌿", text: "Keep fresh herbs in a glass of water, like flowers." },
+      {
+        emoji: "📅",
+        text: "“Best before” is about quality; “use by” is about safety.",
+      },
+      {
+        emoji: "🧊",
+        text: "Freeze bread and leftovers before they go stale.",
+      },
+      {
+        emoji: "🔄",
+        text: "First in, first out — move older items to the front.",
+      },
+    ],
+    asideImpactTitle: "Why It Matters",
+    asideImpactStats: [
+      { value: "1.05 billion t", label: "of food wasted worldwide in 2022" },
+      { value: "60%", label: "of that waste happens in households" },
+      {
+        value: "8–10%",
+        label: "of global greenhouse gas emissions come from food loss and waste",
+      },
+    ],
+    asideImpactSource: "Source: UNEP Food Waste Index Report 2024",
     singlePresets: [
       {
         id: "stale-bread-tomatoes",
@@ -310,7 +370,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
   tr: {
     brandName: "ZeroWaste Chef",
     brandSubtitle: "Evsel Gıda Kurtarma ve Çok Günlü Planlama Motoru",
-    sdgBadge12: "SKA 12.3 · Sıfır Atık",
+    sdgBadge12: "SKA 12 · Sorumlu Üretim ve Tüketim",
     sdgBadge13: "SKA 13 · İklim Eylemi",
     themeLight: "Açık",
     themeDark: "Koyu",
@@ -360,6 +420,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     errorTitle: "İstek Tamamlanamadı",
     emptyIngredientsError:
       "Plan oluşturmadan önce lütfen elinizdeki malzemelerden birkaçını yazın.",
+    requestFailedError:
+      "İstek başarısız oldu ({status}). Lütfen yapılandırmanızı kontrol edin.",
+    networkError: "Sunucuya bağlanırken bir ağ hatası oluştu.",
     safetyAlertBadge: "Gıda Güvenliği Uyarısı",
     safetyAlertTitle:
       "Bozulmuş veya Riskli Malzeme Tespit Edildi — Tüketmeyin",
@@ -387,6 +450,50 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     footerDisclaimerText:
       "ZeroWaste Chef, sürdürülebilirlik ve eğitim amacıyla yapay zekâ destekli mutfak önerileri sunar. Malzemeleri küf, kötü koku veya bozulma açısından daima kontrol edin; alerjen uyumluluğunu doğrulayın ve gıdaları güvenli iç sıcaklıklarda pişirin.",
     footerMeta: "BM SKA 12.3 & SKA 13 Akademik Prototip",
+    footerSupportText:
+      "Samsung Innovation Campus programı kapsamında, Birleşmiş Milletler Kalkınma Programı (UNDP) ve Sürdürülebilir Kalkınma Amaçları'nı desteklemek amacıyla geliştirilmiştir.",
+    undpLogoAlt: "Birleşmiş Milletler Kalkınma Programı (UNDP) logosu",
+    sdgLogoAlt: "Sürdürülebilir Kalkınma Amaçları logosu",
+    samsungLogoAlt: "Samsung logosu",
+    sdgGoalsHeading: "17 Küresel Amaç",
+    sdgGoalsText:
+      "ZeroWaste Chef, 17 Sürdürülebilir Kalkınma Amacı'ndan SKA 12 ve SKA 13'e doğrudan katkı sağlar.",
+    asideLabel: "Rehber, ipuçları ve etki",
+    asideHowTitle: "Nasıl Çalışır?",
+    asideHowSteps: [
+      "Elinizdeki malzemeleri yazın — özellikle bozulmak üzere olanları.",
+      "Tek öğün kurtarma veya 2–7 günlük plan seçin.",
+      "Bozulma sırasına göre pişirin, hiçbir şeyi israf etmeyin.",
+    ],
+    asideTipsTitle: "Gıda Tasarrufu İpuçları",
+    asideTips: [
+      {
+        emoji: "🌿",
+        text: "Taze otları bir bardak suda, çiçek gibi saklayın.",
+      },
+      {
+        emoji: "📅",
+        text: "“Tavsiye edilen tüketim tarihi” kaliteyi, “son tüketim tarihi” güvenliği gösterir.",
+      },
+      {
+        emoji: "🧊",
+        text: "Ekmeği ve artan yemekleri bayatlamadan dondurun.",
+      },
+      {
+        emoji: "🔄",
+        text: "Önce giren önce çıkar — eski ürünleri dolabın önüne alın.",
+      },
+    ],
+    asideImpactTitle: "Neden Önemli?",
+    asideImpactStats: [
+      { value: "1,05 milyar ton", label: "2022'de dünyada israf edilen gıda" },
+      { value: "%60", label: "bu israfın hanelerde gerçekleşen payı" },
+      {
+        value: "%8–10",
+        label: "küresel sera gazı emisyonlarında gıda kaybı ve israfının payı",
+      },
+    ],
+    asideImpactSource: "Kaynak: UNEP Gıda İsrafı Endeksi Raporu 2024",
     singlePresets: [
       {
         id: "stale-bread-tomatoes-tr",

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- ZeroWaste mark: a "0" made of the 17 SDG colours, with a UNDP-blue star -->
+  <rect width="64" height="64" rx="14" fill="#ffffff"/>
+  <g fill="none" stroke-width="8.5">
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#e5243b" stroke-dasharray="0.9 16.1" stroke-dashoffset="0"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#dda63a" stroke-dasharray="0.9 16.1" stroke-dashoffset="-1"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#4c9f38" stroke-dasharray="0.9 16.1" stroke-dashoffset="-2"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#c5192d" stroke-dasharray="0.9 16.1" stroke-dashoffset="-3"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#ff3a21" stroke-dasharray="0.9 16.1" stroke-dashoffset="-4"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#26bde2" stroke-dasharray="0.9 16.1" stroke-dashoffset="-5"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#fcc30b" stroke-dasharray="0.9 16.1" stroke-dashoffset="-6"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#a21942" stroke-dasharray="0.9 16.1" stroke-dashoffset="-7"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#fd6925" stroke-dasharray="0.9 16.1" stroke-dashoffset="-8"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#dd1367" stroke-dasharray="0.9 16.1" stroke-dashoffset="-9"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#fd9d24" stroke-dasharray="0.9 16.1" stroke-dashoffset="-10"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#bf8b2e" stroke-dasharray="0.9 16.1" stroke-dashoffset="-11"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#3f7e44" stroke-dasharray="0.9 16.1" stroke-dashoffset="-12"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#0a97d9" stroke-dasharray="0.9 16.1" stroke-dashoffset="-13"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#56c02b" stroke-dasharray="0.9 16.1" stroke-dashoffset="-14"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#00689d" stroke-dasharray="0.9 16.1" stroke-dashoffset="-15"/>
+  <path d="M30 12A14 20 0 1 1 30 52A14 20 0 1 1 30 12" pathLength="17" stroke="#19486a" stroke-dasharray="0.9 16.1" stroke-dashoffset="-16"/>
+  </g>
+  <path d="M54 3l2.3 6.7L63 12l-6.7 2.3L54 21l-2.3-6.7L45 12l6.7-2.3z" fill="#0468b1"/>
+</svg>

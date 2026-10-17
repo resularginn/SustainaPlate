@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+// Clean, highly legible sans with full Turkish (latin-ext) coverage
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "ZeroWaste Chef | SDG 12.3 & SDG 13 Culinary Planning Engine",
+  title: "ZeroWaste",
   description:
     "Minimalist domestic food rescue and 2-to-7 day spoilage-ordered meal planning powered by Google Gemini AI in support of UN SDG 12.3 and SDG 13.",
 };
@@ -13,7 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={inter.variable}
+    >
       <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
