@@ -2,10 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import type {
-  Language,
-  ThemeMode,
-  TranslationDictionary,
+import {
+  LANGUAGE_OPTIONS,
+  type Language,
+  type ThemeMode,
+  type TranslationDictionary,
 } from "@/app/types";
 
 interface HeaderProps {
@@ -55,43 +56,41 @@ export function Header({
           </div>
         </div>
 
-        {/* Right: EN | TR Language Switch & Animated Light/Dark Toggle */}
+        {/* Right: Language Dropdown & Animated Light/Dark Toggle */}
         <div className="flex items-center gap-2.5 shrink-0">
-          {/* Instant EN | TR Segmented Switch */}
-          <div
-            role="group"
-            aria-label="Language switcher"
-            className="inline-flex items-center p-0.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-canvas)] text-xs font-medium"
-          >
-            <button
-              type="button"
-              onClick={() => onLanguageChange("en")}
-              className={`px-2.5 py-1 rounded-md transition-all duration-150 cursor-pointer ${
-                language === "en"
-                  ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-2xs border border-[var(--border-hairline)]"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-              }`}
+          {/* Language dropdown: 6 UN languages + Turkish, each in its own script */}
+          <label className="relative inline-flex items-center">
+            <span className="sr-only">{t.languageSwitcherLabel}</span>
+            {/* Globe icon */}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              aria-hidden="true"
+              className="pointer-events-none absolute start-2.5 w-3.5 h-3.5 text-[var(--text-muted)]"
             >
-              EN
-            </button>
-            <button
-              type="button"
-              onClick={() => onLanguageChange("tr")}
-              className={`px-2.5 py-1 rounded-md transition-all duration-150 cursor-pointer ${
-                language === "tr"
-                  ? "bg-[var(--bg-surface)] text-[var(--text-primary)] shadow-2xs border border-[var(--border-hairline)]"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-              }`}
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9s1.3-6.3 3.8-9z" />
+            </svg>
+            <select
+              value={language}
+              onChange={(e) => onLanguageChange(e.target.value as Language)}
+              className="appearance-none ps-8 pe-3 py-1.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] text-xs font-medium text-[var(--text-primary)] transition-colors cursor-pointer"
             >
-              TR
-            </button>
-          </div>
+              {LANGUAGE_OPTIONS.map((option) => (
+                <option key={option.code} value={option.code} lang={option.code}>
+                  {option.nativeName}
+                </option>
+              ))}
+            </select>
+          </label>
 
           {/* Animated Light / Dark Theme Toggle */}
           <button
             type="button"
             onClick={onToggleTheme}
-            aria-label="Toggle Light or Dark theme"
+            aria-label={t.themeToggleLabel}
             className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] text-xs font-medium text-[var(--text-primary)] transition-all duration-200 cursor-pointer"
           >
             <span className="relative flex items-center justify-center w-4 h-4">

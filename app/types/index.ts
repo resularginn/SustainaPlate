@@ -1,5 +1,28 @@
+import { ar } from "@/app/i18n/ar";
+import { zh } from "@/app/i18n/zh";
+import { fr } from "@/app/i18n/fr";
+import { ru } from "@/app/i18n/ru";
+import { es } from "@/app/i18n/es";
+
 export type WorkspaceMode = "single" | "multi_day";
-export type Language = "en" | "tr";
+// The six official UN languages, plus Turkish
+export type Language = "ar" | "zh" | "en" | "fr" | "ru" | "es" | "tr";
+
+export interface LanguageOption {
+  code: Language;
+  nativeName: string;
+  dir: "ltr" | "rtl";
+}
+
+export const LANGUAGE_OPTIONS: LanguageOption[] = [
+  { code: "ar", nativeName: "العربية", dir: "rtl" },
+  { code: "zh", nativeName: "中文", dir: "ltr" },
+  { code: "en", nativeName: "English", dir: "ltr" },
+  { code: "fr", nativeName: "Français", dir: "ltr" },
+  { code: "ru", nativeName: "Русский", dir: "ltr" },
+  { code: "es", nativeName: "Español", dir: "ltr" },
+  { code: "tr", nativeName: "Türkçe", dir: "ltr" },
+];
 export type ThemeMode = "light" | "dark";
 
 export interface GenerateRequestPayload {
@@ -142,7 +165,8 @@ export interface TranslationDictionary {
   sdgImpactTitle: string;
   sdgTarget12Note: string;
   sdgTarget13Note: string;
-  dayPrefix: string;
+  /** Day heading, e.g. "Day {n}" */
+  dayLabelFormat: string;
   spoilageScheduleNote: string;
   footerDisclaimerBadge: string;
   footerDisclaimerText: string;
@@ -161,11 +185,21 @@ export interface TranslationDictionary {
   asideImpactTitle: string;
   asideImpactStats: { value: string; label: string }[];
   asideImpactSource: string;
+  languageSwitcherLabel: string;
+  themeToggleLabel: string;
+  workspaceSelectorLabel: string;
+  /** Short day count, e.g. "{n}d" → "3d" */
+  daysShortFormat: string;
   singlePresets: SinglePreset[];
   multiDayPresets: MultiDayPreset[];
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
+  ar,
+  zh,
+  fr,
+  ru,
+  es,
   en: {
     brandName: "ZeroWaste Chef",
     brandSubtitle: "Domestic Food Rescue & Multi-Day Planning Engine",
@@ -242,7 +276,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     sdgImpactTitle: "Food Waste & Climate Footprint Note",
     sdgTarget12Note: "Target 12.3: Halve per-capita household waste",
     sdgTarget13Note: "SDG 13: Mitigate organic landfill emissions",
-    dayPrefix: "Day",
+    dayLabelFormat: "Day {n}",
     spoilageScheduleNote: "Spoilage Priority Rationale",
     footerDisclaimerBadge: "Food Safety & Hygiene Notice",
     footerDisclaimerText:
@@ -289,6 +323,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       },
     ],
     asideImpactSource: "Source: UNEP Food Waste Index Report 2024",
+    languageSwitcherLabel: "Language",
+    themeToggleLabel: "Toggle light or dark theme",
+    workspaceSelectorLabel: "Workspace selector",
+    daysShortFormat: "{n}d",
     singlePresets: [
       {
         id: "stale-bread-tomatoes",
@@ -444,7 +482,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     sdgImpactTitle: "Gıda Atığı ve Karbon Ayak İzi Değerlendirmesi",
     sdgTarget12Note: "Hedef 12.3: Kişi başı gıda atığını yarıya indirme",
     sdgTarget13Note: "SKA 13: Organik atık kaynaklı metan salımını önleme",
-    dayPrefix: "Gün",
+    dayLabelFormat: "{n}. Gün",
     spoilageScheduleNote: "Bozulma Önceliği Gerekçesi",
     footerDisclaimerBadge: "Gıda Güvenliği ve Hijyen Bildirimi",
     footerDisclaimerText:
@@ -494,6 +532,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       },
     ],
     asideImpactSource: "Kaynak: UNEP Gıda İsrafı Endeksi Raporu 2024",
+    languageSwitcherLabel: "Dil",
+    themeToggleLabel: "Açık veya koyu temayı değiştir",
+    workspaceSelectorLabel: "Çalışma alanı seçici",
+    daysShortFormat: "{n}g",
     singlePresets: [
       {
         id: "stale-bread-tomatoes-tr",

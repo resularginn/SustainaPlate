@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-// Clean, highly legible sans with full Turkish (latin-ext) coverage
+// Clean, highly legible sans with Turkish (latin-ext) and Russian (cyrillic) coverage;
+// Arabic and Chinese fall back to the system fonts designed for those scripts
 const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
   variable: "--font-sans",
   display: "swap",
 });
