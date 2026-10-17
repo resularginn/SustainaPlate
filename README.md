@@ -1,82 +1,166 @@
-# ZeroWaste Chef — SDG 12.3 & SDG 13 Culinary Planning Engine
+<div align="center">
 
-**ZeroWaste Chef** is a minimalist Next.js (App Router) web platform advancing **UN Sustainable Development Goal 12 (Target 12.3: Halving Per-Capita Household Food Waste)** and **SDG 13 (Climate Action)**.
+<img src="app/icon.svg" alt="ZeroWaste logo" width="88" />
 
-Built around structured prompt engineering and Schema-First JSON generation via the **Google Gemini API**, ZeroWaste Chef provides two dedicated operational workspaces:
-1. **Single Meal Rescue (`single`)**: Converts immediate expiring kitchen leftovers into a fast, balanced 4-step recipe plus a quick backup idea.
-2. **Multi-Day Meal Plan (`multi_day`, 2 to 7 Days)**: Sequences available household groceries across a user-selected horizon of **2 to 7 days**, scheduling fragile perishables and cooked leftovers on earlier days and hardy root vegetables or dry staples on later days.
+# ZeroWaste Chef
+
+**Cook what you have. Waste nothing.**
+
+An AI kitchen planner that turns leftovers into recipes and plans meals by spoilage risk,<br />
+helping households halve their food waste.
+
+<br />
+
+<img src="public/brand/sdg/sdg-12.png" alt="SDG 12 · Responsible Consumption and Production" width="88" />
+&nbsp;
+<img src="public/brand/sdg/sdg-13.png" alt="SDG 13 · Climate Action" width="88" />
+
+<br /><br />
+
+![Next.js](https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google_Gemini-API-8E75B2?logo=googlegemini&logoColor=white)
+
+![SDG 12](https://img.shields.io/badge/SDG_12-Responsible_Consumption-BF8B2E)
+![SDG 13](https://img.shields.io/badge/SDG_13-Climate_Action-3F7E44)
+![Languages](https://img.shields.io/badge/Languages-7-0468B1)
+
+<br />
+
+<img src="docs/screenshots/desktop-light.png" alt="ZeroWaste Chef home screen in light mode" width="100%" />
+
+</div>
 
 ---
 
-## Core Architectural Highlights
+## Why
 
-- **Minimalist Monochrome UI & Theme System**:
-  - Clean Light mode default (`#F5F5F7` canvas / `#FFFFFF` surface / `#E5E5E7` hairline dividers) with a smooth CSS-transitioned Dark mode (`#121212` canvas / `#1E1E1E` surface / `#2C2C2E` hairline dividers) in the top header.
-- **Instant Bilingual Localization (`EN | TR`)**:
-  - Instant header switch translating all UI labels, form controls, scenario presets, and safety notices between **English** and **Turkish** without reloading the browser, while instructing the Gemini API to generate recipes and impact notes in the selected language.
-- **Strict Prompt Hierarchy & Negative Constraints**:
-  - Enforces `System Rules > User Request > Input Data` for prompt-injection resistance.
-  - Flags spoiled, moldy, or hazardous items (`safety_alert: true`) and warns the user to discard them safely.
-  - Respects user allergies/dietary restrictions, never hallucinates exotic specialty ingredients, and avoids unverified carbon statistics.
-- **Standalone Prompt Documentation**:
-  - Exact copies of the System Prompt and User Instruction Template are maintained in [`prompts/system_prompt.txt`](./prompts/system_prompt.txt) and [`prompts/user_prompt_template.txt`](./prompts/user_prompt_template.txt).
+Households throw away about **60%** of all wasted food, and food loss and waste causes **8–10%** of global greenhouse gas emissions *(UNEP Food Waste Index Report 2024)*.
 
-> **SDK & Model Note:** Because legacy `@google/generative-ai` and `gemini-1.5-flash` / `gemini-2.0-flash` models are deprecated upstream, this project uses the current official `@google/genai` SDK (`client.interactions.create`) with `gemini-3.8-flash`.
+ZeroWaste Chef supports **SDG Target 12.3**, which aims to halve per-capita household food waste, and **SDG 13 (Climate Action)**. It turns what is already in your kitchen into a clear, safe plan to cook it.
 
----
+## Features
+
+| | |
+|---|---|
+| 🍳 **Single Meal Rescue** | Turns expiring leftovers into a quick 4-step recipe, plus a backup idea. |
+| 🗓️ **Multi-Day Meal Plan** | Spreads your groceries over 2–7 days. Fragile produce goes first, hardy staples last. |
+| 🛡️ **Food Safety Guardrails** | Flags moldy or spoiled items and tells you to discard them safely. |
+| 🥗 **Diet-Aware** | Respects allergies and dietary restrictions, and never asks for exotic extra groceries. |
+| 🌍 **Seven Languages** | The six official UN languages plus Turkish, with full right-to-left support for Arabic. |
+| ♿ **Accessible by Design** | WCAG AA contrast, keyboard navigation, reduced-motion support and screen-reader labels. |
+| 🌗 **Light & Dark** | Follows the device theme, with a one-click toggle. |
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/desktop-dark.png" alt="Dark mode" />
+      <br /><sub><b>Dark mode</b></sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/arabic-rtl.png" alt="Arabic interface with right-to-left layout" />
+      <br /><sub><b>Arabic · right-to-left</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="docs/screenshots/mobile.png" alt="Mobile layout" width="260" />
+      <br /><sub><b>Mobile</b></sub>
+    </td>
+  </tr>
+</table>
+
+## Languages
+
+| العربية | 中文 | English | Français | Русский | Español | Türkçe |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Arabic · RTL | Chinese | English | French | Russian | Spanish | Turkish |
+
+The app opens in the visitor's browser language when it is supported, and falls back to English otherwise.
+
+> **Note:** The interface is fully translated. Generated recipes are currently returned in English or Turkish only. Extending the API prompt to the other languages is planned.
+
+## Getting Started
+
+**Requirements:** Node.js 18.18+ and a [Google Gemini API key](https://aistudio.google.com/app/apikey).
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Add your API key
+cp .env.example .env.local
+#    then set GEMINI_API_KEY in .env.local
+
+# 3. Start the dev server
+npm run dev
+```
+
+Open **http://localhost:3000**.
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Lint the project |
+
+## How It Works
+
+```
+Your ingredients ──▶ Next.js API route ──▶ Gemini (schema-first JSON) ──▶ Recipe / plan cards
+                        │
+                        └─ System rules › user request › input data
+                           (prompt-injection resistant, safety-checked)
+```
+
+Prompts follow a strict hierarchy, and Gemini returns structured JSON that the UI renders as recipe and day-plan cards. The full prompts are documented in [`prompts/`](./prompts).
 
 ## Project Structure
 
 ```text
-├── app/
-│   ├── api/
-│   │   └── generate/
-│   │       └── route.ts                 # Gemini API route supporting "single" & "multi_day" (2-7 days)
-│   ├── components/
-│   │   ├── Header.tsx                   # Brand identity, SDG badges, EN|TR switch & Light/Dark toggle
-│   │   ├── SingleMealResults.tsx        # Single Meal Rescue card, safety banner & SDG impact note
-│   │   └── MultiDayResults.tsx          # Sequential 2-7 day timeline cards & cumulative SDG assessment
-│   ├── types/
-│   │   └── index.ts                     # TypeScript interfaces & complete EN/TR translation dictionary
-│   ├── globals.css                      # Minimalist monochrome CSS custom properties & dark mode tokens
-│   ├── layout.tsx                       # Root layout & metadata
-│   └── page.tsx                         # Dual-workspace state, segmented navigation & input forms
-├── prompts/
-│   ├── system_prompt.txt                # Synchronized System Prompt for hackathon submission
-│   └── user_prompt_template.txt         # Synchronized User Instruction Template
-├── .env.example
-├── package.json
-└── README.md
+app/
+├── api/generate/route.ts     Gemini API route (single & multi-day modes)
+├── components/
+│   ├── Header.tsx            Logo, language dropdown, theme toggle
+│   ├── SidePanel.tsx         How it works, food-saving tips, UNEP impact stats
+│   ├── SingleMealResults.tsx Single meal recipe card & safety banner
+│   └── MultiDayResults.tsx   Day-by-day plan timeline
+├── i18n/                     Arabic, Chinese, French, Russian, Spanish
+├── types/index.ts            Types, language list, English & Turkish text
+├── globals.css               Theme tokens, SDG colours, accessibility rules
+├── icon.svg                  SDG-coloured "0" favicon
+├── layout.tsx                Root layout, fonts, metadata
+└── page.tsx                  Workspace tabs, forms, hero & footer
+docs/screenshots/             README screenshots
+prompts/                      System prompt & user prompt template
+public/brand/                 Samsung, UNDP and SDG logos & icons
 ```
 
----
+## Food Safety
 
-## Local Setup & Execution
+ZeroWaste Chef offers cooking suggestions for educational and sustainability purposes. Always check ingredients for mold, off-odors or spoilage, confirm allergen safety, and cook perishable food to a safe internal temperature.
 
-### 1. Install Dependencies
+## Acknowledgements
 
-```bash
-npm install
-```
+<div align="center">
 
-### 2. Configure `.env.local`
+<img src="public/brand/samsung-logo.svg" alt="Samsung" height="22" />
+&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="public/brand/undp-logo.svg" alt="UNDP" height="56" />
+&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="public/brand/sdg-logo-horizontal.png" alt="Sustainable Development Goals" height="36" />
 
-Create a `.env.local` file in the root directory and add your Google Gemini API key:
+<br />
 
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-```
+Built within the **Samsung Innovation Campus** program in support of the<br />
+**United Nations Development Programme (UNDP)** and the **Sustainable Development Goals**.
 
-### 3. Run the Development Server
+<sub>SDG icons and logo © United Nations, used according to the UN SDG guidelines.<br />
+Food waste figures: UNEP Food Waste Index Report 2024.</sub>
 
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 4. Production Build Verification
-
-```bash
-npm run build
-```
+</div>
