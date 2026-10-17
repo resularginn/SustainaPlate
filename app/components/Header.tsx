@@ -91,9 +91,10 @@ export function Header({
             type="button"
             onClick={onToggleTheme}
             aria-label={t.themeToggleLabel}
+            suppressHydrationWarning
             className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] text-xs font-medium text-[var(--text-primary)] transition-all duration-200 cursor-pointer"
           >
-            <span className="relative flex items-center justify-center w-4 h-4">
+            <span className="relative flex items-center justify-center w-4 h-4" suppressHydrationWarning>
               {/* Sun Icon */}
               <svg
                 viewBox="0 0 24 24"
@@ -124,7 +125,7 @@ export function Header({
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             </span>
-            <span className="hidden sm:inline">
+            <span className="hidden sm:inline" suppressHydrationWarning>
               {theme === "light" ? t.themeLight : t.themeDark}
             </span>
           </button>

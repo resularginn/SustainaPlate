@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var k="sustainaplate_prefs_v1",r=localStorage.getItem(k),t=null;if(r){try{t=JSON.parse(r).theme}catch(e){}}if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}if(t==="dark"){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}})();`,
+            __html: `(function(){try{var k="sustainaplate_prefs_v1",kOld="zerowaste_chef_prefs_v1",r=localStorage.getItem(k)||localStorage.getItem(kOld),t=null;if(r){try{t=JSON.parse(r).theme}catch(e){}}if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var cl=document.documentElement.classList;if(t==="dark"){cl.add("dark");document.documentElement.style.colorScheme="dark"}else{cl.remove("dark");document.documentElement.style.colorScheme="light"}}catch(e){}})();`,
           }}
         />
       </head>

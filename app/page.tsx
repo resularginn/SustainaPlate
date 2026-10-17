@@ -21,6 +21,7 @@ import {
 const DAY_OPTIONS = [2, 3, 4, 5, 6, 7] as const;
 const SDG_GOALS = Array.from({ length: 17 }, (_, i) => i + 1);
 const STORAGE_KEY = "sustainaplate_prefs_v1";
+const LEGACY_STORAGE_KEY = "zerowaste_chef_prefs_v1";
 
 // Food emoji per scenario preset — universal, language-independent cues
 const PRESET_EMOJI: Record<string, string> = {
@@ -125,7 +126,9 @@ export default function SustainaPlatePage() {
     }> | null = null;
 
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
+      const raw =
+        window.localStorage.getItem(STORAGE_KEY) ||
+        window.localStorage.getItem(LEGACY_STORAGE_KEY);
       if (raw) {
         saved = JSON.parse(raw);
       }
@@ -133,10 +136,24 @@ export default function SustainaPlatePage() {
       // Ignore localStorage read errors in restricted browsing modes
     }
 
-    if (saved?.theme === "dark" || saved?.theme === "light") {
-      setTheme(saved.theme);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
+    const isDomDark = document.documentElement.classList.contains("dark");
+    const resolvedTheme: ThemeMode =
+      saved?.theme === "dark" || saved?.theme === "light"
+        ? saved.theme
+        : isDomDark
+        ? "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+
+    setTheme(resolvedTheme);
+    const root = document.documentElement;
+    if (resolvedTheme === "dark") {
+      root.classList.add("dark");
+      root.style.colorScheme = "dark";
+    } else {
+      root.classList.remove("dark");
+      root.style.colorScheme = "light";
     }
 
     const validSavedLang =
@@ -218,18 +235,19 @@ export default function SustainaPlatePage() {
       LANGUAGE_OPTIONS.find((option) => option.code === language)?.dir ?? "ltr";
   }, [language]);
 
-  // Synchronize root `.dark` class for smooth CSS transitions
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
-
   const handleToggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prev) => {
+      const nextTheme: ThemeMode = prev === "light" ? "dark" : "light";
+      const root = document.documentElement;
+      if (nextTheme === "dark") {
+        root.classList.add("dark");
+        root.style.colorScheme = "dark";
+      } else {
+        root.classList.remove("dark");
+        root.style.colorScheme = "light";
+      }
+      return nextTheme;
+    });
   };
 
   const handleLanguageChange = (nextLang: Language) => {
